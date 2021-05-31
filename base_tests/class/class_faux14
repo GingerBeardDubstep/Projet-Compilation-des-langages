@@ -1,0 +1,10 @@
+class Test (var x : Integer) EXTENDS Essai is { //extends en minuscule
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+}
+
+{
+
+}

@@ -1,0 +1,10 @@
+class Test var x : Integer) is { //manque une parenthèse
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+}
+
+{
+
+}

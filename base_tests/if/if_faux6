@@ -1,0 +1,8 @@
+{
+if 
+x = 2; // ; en trop
+then 
+x := 1;
+else
+x := 3;
+}

@@ -1,0 +1,8 @@
+{
+if 
+x = 2
+then 
+x := 1 //manque ;
+else
+x := 3;
+}

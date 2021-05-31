@@ -1,0 +1,15 @@
+class Puissance() is {
+	def Puissance() is {}
+
+	def power(a : Integer, b : Integer) : Integer is {
+		if b then result := Puissance.power(a, b-1)*a; else result := 1;
+	}
+}
+
+{
+	a : Integer;
+	is
+	a := Puissance.power(2, 5);
+	String.print("Voici l'output de 2 puissance 5 : ");
+	Integer.println(a);
+}

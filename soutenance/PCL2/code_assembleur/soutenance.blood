@@ -1,0 +1,371 @@
+class Math() is {
+    def Math() is {}
+
+    def static puissance(a : Integer, b : Integer) : Integer is {
+        if b < 0
+        then {
+            toPrint : String := "Erreur puissance, b doit etre supperieur ou egal a 0";
+            is
+            String.println(toPrint);
+            result := -1;
+        } else {
+            result := 1;
+            
+            while b
+            do {
+                result := a * result;
+                b := b - 1;
+            }
+        }
+    }
+
+    def static factorielle(a : Integer) : Integer is {
+        if a < 0
+        then {
+            String.println("Erreur factorielle, a < 0");
+            result := -1;
+        } else {
+            result := 1;
+
+            while a
+            do {
+                result := a*result;
+                a := a - 1;
+            }
+        }
+    }
+
+    def static reste(a : Integer, b : Integer) : Integer is {
+        c : Integer;
+        is
+        c := a/b;
+        c := a - c*b;
+        result := c;
+    }
+
+    def static parmis(k : Integer, n : Integer) : Integer is {
+        kfact : Integer;
+        nfact : Integer;
+        knfact : Integer;
+        is
+        if k < 0
+        then {
+            String.println("Erreur k parmis n : k doit etre >= 0");
+            result := -1;
+        } else {
+            if k > n
+            then {
+                toprint : String := "Erreur n < k";
+                is
+                String.println(toprint);
+                result := -1;
+            } else {
+                kfact := Math.factorielle(k);
+                nfact := Math.factorielle(n);
+                knfact := Math.factorielle(n-k);
+                result := nfact / (kfact*knfact);
+            }
+        }
+    }
+
+    def static abs(a : Integer) : Integer is {
+        if a < 0
+        then {
+            result := -1*a;
+        } else {
+            result := a;
+        }
+    }
+
+    def static isDivider(a : Integer, b : Integer) : Integer is {
+        c : Integer;
+
+        is
+        
+        c := Math.reste(b,a);
+        if c
+        then {
+           result := 0;
+        }else{
+           result := 1;
+        }
+    }
+
+    def static approximateSqrt(a : Integer) : Integer is {
+        b : Integer := 0;
+        maxTest : Integer := 200;
+
+        is
+        
+        if a < 0
+        then {
+            String.println("Erreur SQRT : a < 0");
+            result := -1;
+        } else {
+            test : Integer := 1;
+
+            is 
+
+            while test
+            do {
+                if b*b >=a
+                then {
+                    result := b;
+                    test := 0;
+                } else {
+                    b := b + 1;
+                }
+                if maxTest = 0
+                then {
+                    String.println("Erreur : valeur trop grande");
+                    test := 0;
+                    result := -1;
+                } else {
+                    maxTest := maxTest - 1;
+                }
+            }
+        }
+    }
+}
+
+class Listechainee() is {
+    var size : Integer;
+    var next : Listechainee;
+    var val : Integer;
+
+    def Listechainee() is {
+        this.size := 0;
+    }
+
+    def add(a : Integer, b : Listechainee) is {
+        cpt : Integer := this.size;
+        temp : Listechainee := this;
+        is
+        
+        while cpt
+        do {
+            temp := temp.next;
+            
+            cpt := cpt - 1;
+        }
+        temp.next := b;
+        temp.val := a;
+        this.size := this.size + 1;
+    }
+
+    def get(a : Integer) : Integer is {
+        cpt : Integer := a;
+        temp : Listechainee := this;
+        is
+        if cpt >= this.size
+        then {
+            String.println("Error : index out of range");
+            result:= -1;
+        } else {
+            while cpt
+            do {
+                temp := temp.next;
+                cpt := cpt - 1;
+            }
+            result := temp.val;
+        }
+    }
+
+    def contains(a : Integer) : Integer is {
+        cpt : Integer := this.size;
+        temp : Listechainee := this;
+        is
+        result := 0;
+        while cpt
+        do {
+            if a = temp.val
+            then {
+                result := 1;
+            } else {}
+            temp := temp.next;
+            cpt := cpt-1;
+        }
+    }
+
+}
+class Point(a : Integer, b : Integer) is {
+    var x : Integer;
+    var y : Integer;
+    def Point(a : Integer, b : Integer) is {
+        this.x := a;
+        this.y := b;
+    }
+    def deplacement(a : Integer, b : Integer) is {
+        this.x := this.x + a;
+        this.y := this.y + b;
+    }
+
+    def equals(p1 : Point) : Integer is {
+        if(this.x = p1.x)
+        then {
+            if(this.y = p1.y)
+            then {
+                result := 1;
+            } else {
+                result := 0;
+            }
+        } else {
+
+            result := 0; 
+        }
+    }
+}
+
+class Droite(a : Point, b : Point) is {
+    var x : Point;
+    var y : Point;
+    def Droite(a : Point, b : Point) is {
+        this.x := a;
+        this.y := b;
+    }
+
+    def longueur() : Integer is {
+        result := Math.approximateSqrt((this.x.x - this.y.x)*(this.x.x - this.y.x) + (this.x.y - this.y.y)*(this.x.y - this.y.y));
+    }
+}
+
+{
+    a : Integer;
+    b : Integer;
+    c : Integer := 3;
+    s : String;
+    h : String := "Hello ";
+    liste : Listechainee;
+    d : Point;
+    e : Point;
+    f : Droite;
+    g : Point;
+
+    is
+    String.println("Test soutenance : ");
+    String.println("");
+    String.println("Operations sur les entiers : ");
+    //3
+    Integer.println(c); 
+    b := 2;
+    //2
+    Integer.println(b); 
+    a := c + b;
+    //5
+    Integer.println(a); 
+    b := b * a - c;
+    //7
+    Integer.println(b); 
+    c := (a + b) * c - a + (a - b) + 2 * c - b / c;
+    // (5+7)*3 - 5 + (5-7) + 2*3 - 7/3 = 36 - 5 - 2 + 6 - 2 = 33
+    Integer.println(c); 
+    if a < b then c := 0; else c := -1;
+    //0
+    Integer.println(c);
+    if a + 2 >= 2*b - c then c := c + a; else c := c - 3;
+    //-3
+    Integer.println(c);
+    if a + 2 = b then c := a; else c := b;
+    //5
+    Integer.println(c);
+    while b <> 2 do {b := b - 1; a := a + 1;}
+    //2
+    Integer.println(b);
+    //10
+    Integer.println(a);
+    while a > c do {a := a - 2; c := (c-1)*2;}
+    //8
+    Integer.println(a);
+    //8
+    Integer.println(c);
+
+    String.println("");
+    String.println("Module Math : ");
+
+    //16
+    Integer.println(Math.puissance(2,4)); 
+    //720
+    Integer.println(Math.factorielle(6));
+    //2
+    Integer.println(Math.reste(12,5));
+    //20
+    Integer.println(Math.parmis(3,6));
+    //8
+    Integer.println(Math.abs(-8));
+    //8
+    Integer.println(Math.abs(8));
+    //1
+    Integer.println(Math.isDivider(3,12));
+    //0
+    Integer.println(Math.isDivider(4,9));
+    //3
+    Integer.println(Math.approximateSqrt(9));
+    //5
+    Integer.println(Math.approximateSqrt(25));
+    //Erreur
+    Integer.println(Math.approximateSqrt(-10));
+
+    String.println("");
+    String.print("Impression");
+    String.println(" de Strings");
+    
+    //hello world
+    String.print("Hello");
+    s := " there";
+    String.println(s);
+    //no
+    if h = s then String.println("yes"); else String.println("no");
+    //different
+    if s <> "hello" then String.println("different"); else Integer.println(a);
+    //difference d'espace
+    if s = " there" then String.println("egalite"); else String.println("difference d'espace");
+
+    String.println("");
+    String.println("Liste chainee : ");
+    
+    liste := new Listechainee();
+    liste.add(10, new Listechainee());
+    liste.add(50, new Listechainee());
+    liste.add(65, new Listechainee());
+    //3
+    Integer.println(liste.size);
+    a := liste.get(0);
+    //10
+    Integer.println(a);
+    a := liste.get(1);
+    //50
+    Integer.println(a);
+    a := liste.get(2);
+    //65
+    Integer.println(a);
+    a := liste.get(3);
+    //Erreur 
+    Integer.println(a);
+    //1
+    Integer.println(liste.contains(50));
+    //0
+    Integer.println(liste.contains(87));
+
+    String.println("");
+    String.println("Point / Droite : ");
+
+    d := new Point(25,-10);
+    g := new Point(34,15);
+    e := new Point(34,15);
+    f := new Droite(d,e);
+    b := f.longueur();
+    d := new Point(25,-10);
+    g := new Point(34,15);
+    e := new Point(34,15);
+    Integer.println(b); //26,6 -> 27
+    // b := d.equals(e);
+    //Integer.println(b);
+    if d.equals(e) 
+    then {
+    String.println("d egal e"); 
+    } else {
+     String.println("d different de e");
+    }
+    if e.equals(g) then String.println("e egal g"); else String.println("e different de g");
+    String.println("");
+}

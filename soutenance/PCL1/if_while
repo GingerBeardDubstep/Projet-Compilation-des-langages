@@ -1,0 +1,9 @@
+{
+while a = 0 do 
+    if x < 1 then 
+        x := x + 1;
+    else
+        while b do        
+            x := x - 1;
+            y := x * 2;
+}

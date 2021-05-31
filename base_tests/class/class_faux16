@@ -1,0 +1,10 @@
+class Test (var x : Integer) IS { //is en minuscule
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+}
+
+{
+
+}

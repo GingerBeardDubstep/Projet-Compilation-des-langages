@@ -1,0 +1,10 @@
+class Test (var x : Integer) is {
+
+	def test (var x : Integer) is { //pas de constructeur
+		this.x := x;
+	}
+}
+
+{
+
+}

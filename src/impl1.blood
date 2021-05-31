@@ -1,0 +1,58 @@
+{
+	a : Integer;
+	b : Integer := 8;
+	c : Integer;
+	d : Integer;
+	e : Integer := 2;
+	f : Integer;
+	g : String;
+	h : String := "test";
+	i : String;
+	tst1 : Integer;
+	tst2 : Integer;
+	is
+	a := b + 5; // resultat attendu 8
+	c := 1; //true
+	if c <> 0
+	then {
+		c := 10; //Résultat attendu
+	} else {
+		c := -1;
+	}
+	if a = b
+	then {
+		d := c;
+	} else {
+		d := 3; //Résultat attendu
+	}
+	{
+		a : Integer := 2; // redéclaration de a mais dans un autre bloc
+		cpt : Integer := 7;
+		is
+		while cpt > 3
+		do {
+			e := a*e; // e est toujours atteignable
+			cpt := cpt - 1;
+		}
+		// 2**5 = 32 dans e attendu (0x0020)
+	}
+	f := c * e  - e /(a - 5); // 320 - 4 =  (0x0316)
+
+	//Les chaines de caractères
+	g := "noway";
+	i := "test";
+	if i = h
+	then {
+		tst1 := 1; //resultat attendu
+	} else {
+		tst1 := 0;
+	}
+
+	if i = g
+	then {
+		tst2 := 1;
+	} else {
+		tst2 := 0; //resultat attendu
+	}
+
+}

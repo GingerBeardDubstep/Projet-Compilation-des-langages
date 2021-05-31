@@ -1,0 +1,22 @@
+class Test(a : Integer, b : Integer) is {
+	var x : Integer;
+	var y : Integer;
+	def Test(a : Integer, b : Integer) is {
+		this.x := a;
+		this.y := b;
+	}
+}
+
+{
+	a : String := "thisisnotatest";
+	b : String := "thisisnotatest";
+	c : Integer := 50;
+	d : Integer := 10;
+	e : Integer;
+	is
+	a := Integer.toString(c);
+	b := Integer.toString(d*6);
+	if a<>b then String.println("Differents"); else String.println("Egaux");
+	e := c=d;
+	Integer.println(e);
+}

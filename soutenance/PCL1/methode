@@ -1,0 +1,5 @@
+{
+x.double(x);
+x.puissance(2);
+y := x.somme(2);
+}

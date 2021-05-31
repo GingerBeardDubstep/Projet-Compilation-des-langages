@@ -1,0 +1,15 @@
+class Test (var x : Integer) is {
+
+    x := x+1;
+
+    static y : Integer; //var manquant
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+
+}
+
+{
+
+}

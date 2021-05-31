@@ -1,0 +1,86 @@
+
+class Point(a : Integer, b : Integer) is {
+	var x : Integer;
+	var y : Integer;
+	def Point(a : Integer, b : Integer) is {
+		this.x := a;
+		this.y := b;
+	}
+	def deplacement(a : Integer, b : Integer) is {
+		this.x := this.x + a;
+		this.y := this.y + b;
+	}
+
+	def equals(p1 : Point) : Integer is {
+		a : Integer := p1.x;
+		b : Integer := this.x;
+		c : Integer := p1.y;
+		d : Integer := this.y;
+		e : Integer := this.x = this.y;
+		is
+		result := a = b;
+		if this.x = p1.x then result := p1.y = this.y; else result := 0;
+	}
+}
+
+class Droite(a : Point, b : Point) is {
+	var x : Point;
+	var y : Point;
+	var z : Integer;
+	def Droite(a : Point, b : Point) is {
+		this.x := a;
+		this.y := b;
+		this.z := 8;
+	}
+
+	def longueur() : Integer is {
+		result := (this.x.x - this.y.x)*(this.x.x - this.y.x) + (this.x.y - this.y.y)*(this.x.y - this.y.y);
+	}
+	def milieu() : Point is {
+		abs : Integer := (this.x.x + this.y.x) / 2;
+		ord : Integer := (this.x.y + this.y.y) / 2;
+
+		is
+		
+		result := new Point(abs,ord);
+	}
+}
+
+{
+	a : Point;
+	b : String := "CECI EST UN TEST";
+	c : Integer;
+	d : Integer;
+	e : Point;
+	f : Droite;
+	g : Point := new Point(34,15);
+	
+
+	
+	is
+	a := new Point(25,-10);
+	e := new Point(33,14);
+	f := new Droite(a,e);
+	//c := f.longueur();
+	//Integer.println(c);
+	//non
+	d := a.equals(e);
+	//0
+	Integer.println(d);
+	//oui
+	if e.equals(g) then String.println("e egal g"); else String.println("e different de g");
+	//25
+	Integer.println(a.x);
+	//-10
+	Integer.println(a.y);
+	g := f.milieu();
+	//29
+	Integer.println(g.x);
+	//2
+	Integer.println(g.y);
+	a.deplacement(-10,5);
+	//15
+	Integer.println(a.x);
+	//-5
+	Integer.println(a.y);
+}

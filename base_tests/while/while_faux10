@@ -1,0 +1,6 @@
+{
+while 
+x := 0 //while ne peut pas être suivi par une affectation
+do 
+; //; n'est pas une expression
+}

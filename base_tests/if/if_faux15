@@ -1,0 +1,8 @@
+{
+if 
+x = 2
+then 
+// manque une expression après then
+else 
+x := 0;
+}

@@ -1,0 +1,8 @@
+{
+if 
+x := 2 // if ne peut pas être suivi d'une affectation
+then 
+x := 1;
+else 
+x := 0;
+}

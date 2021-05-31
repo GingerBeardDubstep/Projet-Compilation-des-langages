@@ -1,0 +1,9 @@
+{
+	a : Integer := 5;
+	b : Integer := 2;
+	c : Integer;
+
+	is 
+
+	c := a - b;
+}

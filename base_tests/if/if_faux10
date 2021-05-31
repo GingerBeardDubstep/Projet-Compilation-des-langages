@@ -1,0 +1,8 @@
+{
+if 
+x = 2
+Then //then en minuscule
+x := 1;
+else
+x := 0;
+}

@@ -1,0 +1,13 @@
+class Test (var x : Integer) is {
+
+	def Test (var x : Integer) is {
+		this.x := x+1;
+	}
+	def Choix (var x : Integer) is {
+		this.x := x+2;
+	} //définition de 2 constructeurs
+}
+
+{
+
+}

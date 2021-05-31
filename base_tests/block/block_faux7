@@ -1,0 +1,7 @@
+{
+x := 0;
+def Methode (x : Integer, s : String) is { //impossible de définir des méthodes dans le block principal
+    x := x+y;
+    y := 2*x;
+}
+}

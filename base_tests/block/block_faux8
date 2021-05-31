@@ -1,0 +1,7 @@
+def Methode (x : Integer, s : String) is { //impossible de définir des méthodes hors d'une classe
+    x := x+y;
+    y := 2*x;
+}
+{
+x := 0;
+}

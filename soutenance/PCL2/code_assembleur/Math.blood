@@ -1,0 +1,148 @@
+class Math() is {
+	def Math() is {}
+
+	def static puissance(a : Integer, b : Integer) : Integer is {
+		if b < 0
+		then {
+			toPrint : String := "Erreur puissance, b doit etre supperieur ou egal a 0";
+			is
+			String.println(toPrint);
+			result := -1;
+		} else {
+			result := 1;
+			
+			while b
+			do {
+				result := a * result;
+				b := b - 1;
+			}
+		}
+	}
+
+	def static factorielle(a : Integer) : Integer is {
+		if a < 0
+		then {
+			String.println("Erreur factorielle, a < 0");
+			result := -1;
+		} else {
+			result := 1;
+
+			while a
+			do {
+				result := a*result;
+				a := a - 1;
+			}
+		}
+	}
+
+	def static reste(a : Integer, b : Integer) : Integer is {
+		c : Integer;
+		is
+		c := a/b;
+		c := a - c*b;
+		result := c;
+	}
+
+	def static parmis(k : Integer, n : Integer) : Integer is {
+		kfact : Integer;
+		nfact : Integer;
+		knfact : Integer;
+		is
+		if k < 0
+		then {
+			String.println("Erreur k parmis n : k doit etre >= 0");
+			result := -1;
+		} else {
+			if k > n
+			then {
+				toprint : String := "Erreur n < k";
+				is
+				String.println(toprint);
+				result := -1;
+			} else {
+				kfact := Math.factorielle(k);
+				nfact := Math.factorielle(n);
+				knfact := Math.factorielle(n-k);
+				result := nfact / (kfact*knfact);
+			}
+		}
+	}
+
+	def static abs(a : Integer) : Integer is {
+		if a < 0
+		then {
+			result := -1*a;
+		} else {
+			result := a;
+		}
+	}
+
+	def static isDivider(a : Integer, b : Integer) : Integer is {
+		c : Integer;
+		is
+		c := Math.reste(b,a);
+		if c
+		then {
+		    result := 0;
+		}else{
+			result := 1;
+		}
+	}
+
+	def static approximateSqrt(a : Integer) : Integer is {
+		b : Integer := 0;
+		maxTest : Integer := 200;
+		is
+		if a < 0
+		then {
+			String.println("Erreur SQRT : a < 0");
+			result := -1;
+		} else {
+			test : Integer := 1;
+            is
+			while(test)
+			do {
+				if b*b >=a
+				then {
+					result := b;
+					test := 0;
+				} else {
+					b := b + 1;
+				}
+				if maxTest = 0
+				then {
+					String.println("Erreur : valeur trop grande");
+					test := 0;
+					result := -1;
+				} else {
+					maxTest := maxTest - 1;
+				}
+			}
+		}
+	}
+}
+
+{
+    //16
+	Integer.println(Math.puissance(2,4));
+    //120
+	Integer.println(Math.factorielle(5));
+    //2
+	Integer.println(Math.reste(12,5));
+    //20
+	Integer.println(Math.parmis(3,6));
+    //8
+	Integer.println(Math.abs(-8));
+    //8
+	Integer.println(Math.abs(8));
+    //1
+	Integer.println(Math.isDivider(3,12));
+    //0
+	Integer.println(Math.isDivider(4,9));
+    //3
+	Integer.println(Math.approximateSqrt(9));
+    //5
+    Integer.println(Math.approximateSqrt(23));
+    //Erreur
+    Integer.println(Math.approximateSqrt(-5));
+}

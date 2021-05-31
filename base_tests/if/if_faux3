@@ -1,0 +1,6 @@
+{
+if 
+x = 2
+then 
+x := 1; // if sans else
+}

@@ -1,0 +1,14 @@
+class    Test    (  var 
+x :     Integer) is {
+
+
+	def     Test (  var x :      Integer) 
+is {
+                        		this.x :=         x;
+	}}
+{
+
+
+
+
+}

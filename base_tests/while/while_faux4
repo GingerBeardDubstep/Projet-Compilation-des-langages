@@ -1,0 +1,6 @@
+{
+while 
+x => 0 // supérieur ou égal s'écrit >=
+do 
+x := x - 1;
+}

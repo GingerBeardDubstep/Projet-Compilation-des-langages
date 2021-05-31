@@ -1,0 +1,25 @@
+class Test (var x : Integer) is {
+
+    var y : Integer;
+    var z : Integer := 0;
+    var static s : String;
+
+
+    y := x+z;
+    x := y*2;
+
+	def Constructeur (var x : Integer) is {
+		this.x := x;
+	}
+    def methode (d : Double, x : Integer) is {
+        d := d + 2;
+    }
+    def double(x : Integer) is {
+        x := 2*x;
+        return;
+    }
+}
+
+{
+
+}

@@ -1,0 +1,10 @@
+class Test (var x : Integer) is {
+    /*mauvais commentaire
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+}
+
+{
+
+}

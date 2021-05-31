@@ -1,0 +1,8 @@
+{
+if 
+x = 2
+else //mauvais ordre then et else
+x := 1;
+then
+x := 3;
+}

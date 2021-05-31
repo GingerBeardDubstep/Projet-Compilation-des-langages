@@ -1,0 +1,72 @@
+
+class Point(a : Integer, b : Integer) is {
+	var x : Integer;
+	var y : Integer;
+	def Point(a : Integer, b : Integer) is {
+		this.x := a;
+		this.y := b;
+	}
+	def deplacement(a : Integer, b : Integer) is {
+		this.x := this.x + a;
+		this.y := this.y + b;
+	}
+
+	def equals(p1 : Point) : Integer is {
+		a : Integer := p1.x;
+		b : Integer := this.x;
+		c : Integer := p1.y;
+		d : Integer := this.y;
+		is
+		if this.x = p1.x
+		then {
+			if this.y = p1.y
+			then
+				result := 1;
+			else
+				result := 0;
+			
+		} else {
+			result := 0;
+		}
+	}
+}
+
+class Droite(a : Point, b : Point) is {
+	var x : Point;
+	var y : Point;
+	var z : Integer;
+	def Droite(a : Point, b : Point) is {
+		this.x := a;
+		this.y := b;
+		this.z := 8;
+	}
+
+	def longueur() : Integer is {
+		xcarr : Integer := (this.x.x - this.y.x)*(this.x.x - this.y.x);
+		ycarr : Integer := (this.x.y - this.y.y)*(this.x.y - this.y.y);
+		is
+		result := xcarr + ycarr;
+	}
+}
+
+{
+	a : Point;
+	c : Integer;
+	e : Point;
+	f : Droite;
+	g : Point := new Point(34,15);
+	is
+	a := new Point(25,-10);
+	e := new Point(34,15);
+	f := new Droite(a,e);
+	String.print("Square distance : ");
+	c := f.longueur(); // attendu longueur au carré = (34-25)**2+(-10-15)**2 = 706
+	Integer.println(c);
+	if a.equals(e) 
+	then {
+	String.println("a egal e"); 
+	} else {
+	 String.println("a different de e");
+	}
+	if e.equals(g) then String.println("e egal g"); else String.println("e different de g");
+}

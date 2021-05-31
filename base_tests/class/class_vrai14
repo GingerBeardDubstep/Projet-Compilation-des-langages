@@ -1,0 +1,19 @@
+class Test (var x : Integer) is {
+
+    var y : Integer;
+    var z : Integer := 0;
+    var static s : String;
+
+
+    y := x+z;
+    x := y*2;
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+
+}
+
+{
+
+}

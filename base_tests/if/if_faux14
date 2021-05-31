@@ -1,0 +1,8 @@
+{
+if 
+ // manque une condition
+then 
+x := 1;
+else 
+x := 0;
+}

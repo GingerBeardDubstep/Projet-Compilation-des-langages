@@ -1,0 +1,3686 @@
+EXIT_EXC EQU 64
+READ_EXC EQU 65
+WRITE_EXC EQU 66
+STACK_ADRS EQU 0x2000
+LOAD_ADRS EQU 0xD000
+NIL EQU 0
+
+SP EQU R15
+WR EQU R14
+BP EQU R13
+
+ASCII_0 EQU 48
+ASCII_MINUS EQU 45
+ASCII_NEW_LINE EQU 15
+ORG LOAD_ADRS
+START main_
+ZERO string "0"
+UN string "1"
+DEUX string "2"
+TROIS string "3"
+QUATRE string "4"
+CINQ string "5"
+SIX string "6"
+SEPT string "7"
+HUIT string "8"
+NEUF string "9"
+String_print_	LDQ 0,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R0, BP
+ADQ 4, R0
+LDW R0, (R0)
+LDW WR, #WRITE_EXC
+TRP WR
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+String_println_	LDQ 0,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R0, BP
+ADQ 4, R0
+LDW R0, (R0)
+LDW WR, #WRITE_EXC
+TRP WR
+NEWLINE RSW 6
+LDQ NEWLINE, R1
+LDQ ASCII_NEW_LINE, R2
+STB R2, (R1)+
+LDQ 10, R2
+STB R2, (R1)+
+LDQ 0, R2
+STB R2, (R1)+
+LDQ NEWLINE, R0
+LDW WR, #WRITE_EXC
+TRP WR
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Integer_print_	LDQ 0,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R0, BP
+ADQ 4, R0
+LDW R0, (R0)
+string0 RSW 32
+ADQ -2, SP
+LDQ string0, R1
+STW R1,(SP)
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_toString_
+ADQ 2, SP
+STW R0, (SP)
+JSR @String_print_
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Integer_println_	LDQ 0,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R0, BP
+ADQ 4, R0
+LDW R0, (R0)
+string1 RSW 32
+ADQ -2, SP
+LDQ string1, R1
+STW R1,(SP)
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_toString_
+ADQ -2, SP
+STW R0, (SP)
+JSR @String_println_
+NOP
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Integer_toString_	LDQ 0,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R0, BP
+ADQ 4, R0
+LDQ 0,R7
+LDW R0, (R0)
+LDW R8, (BP)6
+TST R0
+JGE #is_positive_-$-2
+NEG R0, R0
+LDQ ASCII_MINUS, R9
+ADQ 1, R7
+JMP #4
+is_positive_	LDQ 0, R9
+LDW R10, #10
+debut_boucle_tostring_	LDW R2, R0
+DIV R2, R10, R1
+LDW R0, R1
+LDW R3, R2
+ADQ ASCII_0, R3
+ADQ -2, SP
+STW R3, (SP)
+ADQ 1, R7
+LDW R5, #0
+CMP R0, R5
+JNE #debut_boucle_tostring_-$-2
+LDQ 0, R5
+CMP R9, R5
+JEQ #copy_loop_-$-2
+STB R9, (R8)+
+copy_loop_	LDW R0, (SP)
+ADQ 2, SP
+STB R0, (R8)+
+CMP SP, BP
+JNE #copy_loop_-$-2
+no_print_minus	LDQ 0, R0
+STB R0, (R8)+
+LDW R0, BP
+ADQ 6, R0
+LDQ 0,R7
+LDW R0, (R0)
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+main_	LDW SP, #STACK_ADRS
+LDQ NIL, BP
+LDQ 20, R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #3
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+string2 string "Hello "
+LDW R1, # string2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-20
+string3 string "Test soutenance : "
+LDW R1, # string3
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string4 string ""
+LDW R1, # string4
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string5 string "Operations sur les entiers : "
+LDW R1, # string5
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+DIV R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R1, R2
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if0_-$-2
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+CMP R0, BP
+JNE #if0fin_-$-2
+if0_	LDW R6, #1
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+if0fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JLE #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if1_-$-2
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+CMP R0, BP
+JNE #if1fin_-$-2
+if1_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #3
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+if1fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JEQ #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if2_-$-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+CMP R0, BP
+JNE #if2fin_-$-2
+if2_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+if2fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+while0_ LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JNE #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while0fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while0_-$-2
+while0fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+while1_ LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while1fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while1_-$-2
+while1fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string6 string ""
+LDW R1, # string6
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string7 string "Module Math : "
+LDW R1, # string7
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_puissance_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_factorielle_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #5
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #12
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_reste_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #3
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_parmis_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #8
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_abs_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #8
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_abs_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #12
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #3
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_isDivider_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #9
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #4
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_isDivider_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #9
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_approximateSqrt_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #25
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_approximateSqrt_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #10
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_approximateSqrt_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string8 string ""
+LDW R1, # string8
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string9 string "Impression"
+LDW R1, # string9
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_print_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string10 string " de Strings"
+LDW R1, # string10
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string11 string "Hello"
+LDW R1, # string11
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_print_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string12 string " there"
+LDW R1, # string12
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-8
+LDW R2, BP
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-20
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+LDQ 0, R3
+comparer_caractere_0	LDW R4, (R1)+
+LDW R5, (R2)+
+CMP R4, R5
+JNE #not_equal0-$-2
+LDQ 0, R8
+CMP R4, R8
+JNE #comparer_caractere_0-$-2
+LDQ 1, R1
+STW R1, (SP)
+JMP #6
+not_equal0	LDQ 0, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if3_-$-2
+string13 string "yes"
+LDW R1, # string13
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+CMP R0, BP
+JNE #if3fin_-$-2
+if3_	LDW R6, #1
+string14 string "no"
+LDW R1, # string14
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+if3fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+string15 string "hello"
+LDW R1, # string15
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+LDQ 0, R3
+comparer_caractere_1	LDW R4, (R1)+
+LDW R5, (R2)+
+CMP R4, R5
+JNE #not_equal1-$-2
+LDQ 0, R8
+CMP R4, R8
+JNE #comparer_caractere_1-$-2
+LDQ 0, R1
+STW R1, (SP)
+JMP #6
+not_equal1	LDQ 1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if4_-$-2
+string16 string "different"
+LDW R1, # string16
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+CMP R0, BP
+JNE #if4fin_-$-2
+if4_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+if4fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+string17 string " there"
+LDW R1, # string17
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+LDQ 0, R3
+comparer_caractere_2	LDW R4, (R1)+
+LDW R5, (R2)+
+CMP R4, R5
+JNE #not_equal2-$-2
+LDQ 0, R8
+CMP R4, R8
+JNE #comparer_caractere_2-$-2
+LDQ 1, R1
+STW R1, (SP)
+JMP #6
+not_equal2	LDQ 0, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if5_-$-2
+string18 string "egalite"
+LDW R1, # string18
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+CMP R0, BP
+JNE #if5fin_-$-2
+if5_	LDW R6, #1
+string19 string "difference d'espace"
+LDW R1, # string19
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+if5fin_	LDW R6, #1
+string20 string ""
+LDW R1, # string20
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string21 string "Liste chainee : "
+LDW R1, # string21
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string22 RSW 6
+LDQ string22, R0
+JSR @Listechainee_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-10
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+string23 RSW 6
+LDQ string23, R0
+JSR @Listechainee_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R1, #10
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_add_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+string24 RSW 6
+LDQ string24, R0
+JSR @Listechainee_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R1, #50
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_add_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+string25 RSW 6
+LDQ string25, R0
+JSR @Listechainee_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R1, #65
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_add_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)6
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_get_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_get_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R1, #2
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_get_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R1, #3
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_get_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R1, #50
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_contains_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-10
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R1, #87
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Listechainee_contains_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string26 string ""
+LDW R1, # string26
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+string27 string "Point / Droite : "
+LDW R1, # string27
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #10
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #25
+ADQ -2, SP
+STW R1, (SP)
+string28 RSW 4
+LDQ string28, R0
+JSR @Point_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-12
+LDW R1, #15
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #34
+ADQ -2, SP
+STW R1, (SP)
+string29 RSW 4
+LDQ string29, R0
+JSR @Point_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-18
+LDW R1, #15
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #34
+ADQ -2, SP
+STW R1, (SP)
+string30 RSW 4
+LDQ string30, R0
+JSR @Point_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-14
+LDW R2, BP
+LDW R1, (R2)-14
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-12
+ADQ -2, SP
+STW R1, (SP)
+string31 RSW 4
+LDQ string31, R0
+JSR @Droite_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-16
+LDW R2, BP
+LDW R1, (R2)-16
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+STW R8, R0
+JSR @Droite_longueur_
+LDW R6, #1
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R1, #10
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #25
+ADQ -2, SP
+STW R1, (SP)
+string32 RSW 4
+LDQ string32, R0
+JSR @Point_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-12
+LDW R1, #15
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #34
+ADQ -2, SP
+STW R1, (SP)
+string33 RSW 4
+LDQ string33, R0
+JSR @Point_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-18
+LDW R1, #15
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #34
+ADQ -2, SP
+STW R1, (SP)
+string34 RSW 4
+LDQ string34, R0
+JSR @Point_Constructor_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-14
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+JSR @Integer_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R2, BP
+LDW R1, (R2)-12
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R2, BP
+LDW R1, (R2)-14
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Point_equals_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if6_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+string35 string "d egal e"
+LDW R1, # string35
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if6fin_-$-2
+if6_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+string36 string "d different de e"
+LDW R1, # string36
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if6fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-14
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, R8
+LDW R2, BP
+LDW R1, (R2)-18
+ADQ -2, SP
+STW R1, (SP)
+STW R8, R0
+JSR @Point_equals_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if7_-$-2
+string37 string "e egal g"
+LDW R1, # string37
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+CMP R0, BP
+JNE #if7fin_-$-2
+if7_	LDW R6, #1
+string38 string "e different de g"
+LDW R1, # string38
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+if7fin_	LDW R6, #1
+string39 string ""
+LDW R1, # string39
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+TRP #EXIT_EXC
+LDW WR, #EXIT_EXC
+TRP WR
+Math_Constructor_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Math_puissance_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R1, R2
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if8_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 2, R1
+LDW BP, SP
+SUB SP, R1, SP
+string40 string "Erreur puissance, b doit etre supperieur ou egal a 0"
+LDW R1, # string40
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if8fin_-$-2
+if8_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+while2_ LDW R6, #1
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while2fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)6
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while2_-$-2
+while2fin_	LDW R6, #1
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if8fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Math_factorielle_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R1, R2
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if9_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+string41 string "Erreur factorielle, a < 0"
+LDW R1, # string41
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if9fin_-$-2
+if9_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+while3_ LDW R6, #1
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while3fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while3_-$-2
+while3fin_	LDW R6, #1
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if9fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Math_reste_	LDQ 4,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+DIV R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R0, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Math_parmis_	LDQ 8,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R1, R2
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if10_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+string42 string "Erreur k parmis n : k doit etre >= 0"
+LDW R1, # string42
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if10fin_-$-2
+if10_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if11_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 2, R1
+LDW BP, SP
+SUB SP, R1, SP
+string43 string "Erreur n < k"
+LDW R1, # string43
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if11fin_-$-2
+if11_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_factorielle_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_factorielle_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+JSR @Math_factorielle_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-8
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+DIV R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if11fin_	LDW R6, #1
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if10fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Math_abs_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R1, R2
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if12_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if12fin_-$-2
+if12_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if12fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Math_isDivider_	LDQ 4,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+JSR @Math_reste_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if13_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if13fin_-$-2
+if13_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if13fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Math_approximateSqrt_	LDQ 6,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R1, #200
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R1, R2
+JLW #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if14_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+string44 string "Erreur SQRT : a < 0"
+LDW R1, # string44
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if14fin_-$-2
+if14_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 2, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+while4_ LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while4fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JLE #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if15_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if15fin_-$-2
+if15_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if15fin_	LDW R6, #1
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JEQ #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if16_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+string45 string "Erreur : valeur trop grande"
+LDW R1, # string45
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if16fin_-$-2
+if16_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if16fin_	LDW R6, #1
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while4_-$-2
+while4fin_	LDW R6, #1
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if14fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-2
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Listechainee_Constructor_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 6, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Listechainee_add_	LDQ 6,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)6
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+while5_ LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while5fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while5_-$-2
+while5fin_	LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-4
+ADQ 2, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-4
+ADQ 4, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)6
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 6, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Listechainee_get_	LDQ 8,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-8
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R2, BP
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)6
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JLE #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if17_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+string46 string "Error : index out of range"
+LDW R1, # string46
+ADQ -2, SP
+STW R1, (SP)
+JSR @String_println_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+LDW R1, #1
+NEG R1, R1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if17fin_-$-2
+if17_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+while6_ LDW R6, #1
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while6fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-8
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while6_-$-2
+while6fin_	LDW R6, #1
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if17fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Listechainee_contains_	LDQ 8,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)6
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-8
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+while7_ LDW R6, #1
+LDW R2, BP
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #while7fin_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JEQ #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if18_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if18fin_-$-2
+if18_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if18fin_	LDW R6, #1
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-6
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-8
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-8
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #while7_-$-2
+while7fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Point_Constructor_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 2, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 4, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Point_deplacement_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 2, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 4, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Point_equals_	LDQ 4,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JEQ #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if19_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R2, (SP)
+ADQ 2, SP
+LDW R1, (SP)
+CMP R2, R1
+JEQ #10
+LDW R1, #0
+JMP #6
+LDW R1, #1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, #0
+CMP R1, R2
+JEQ #if20_-$-2
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #1
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if20fin_-$-2
+if20_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if20fin_	LDW R6, #1
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+CMP R0, BP
+JNE #if19fin_-$-2
+if19_	LDW R6, #1
+ADQ -2, SP
+STW BP, (SP)
+ADQ -2, SP
+STW BP, (SP)
+LDQ 0, R1
+LDW BP, SP
+SUB SP, R1, SP
+LDW R1, #0
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (R2)
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+if19fin_	LDW R6, #1
+LDW R2, BP
+LDW R0, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Droite_Constructor_	LDQ 2,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)4
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 2, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW R2, BP
+LDW R1, (R2)6
+ADQ -2, SP
+STW R1, (SP)
+LDW R2, BP
+LDW R2, (BP)-2
+ADQ 4, R2
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)
+Droite_longueur_	LDQ 4,R1
+ADQ -2, SP
+STW BP, (SP)
+LDW BP, SP
+SUB SP, R1, SP
+STW R0, (BP)-2
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)2
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R2, BP
+LDW R1, (R2)-2
+ADQ -2, SP
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R1, (SP)
+LDW R1, (R1)4
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+SUB R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+MUL R2, R1, R1
+STW R1, (SP)
+LDW R1, (SP)
+ADQ 2, SP
+LDW R2, (SP)
+ADD R2, R1, R1
+STW R1, (SP)
+JSR @Math_approximateSqrt_
+LDW R6, #1
+ADQ 2, SP
+ADQ 2, SP
+ADQ -2, SP
+STW R0, (SP)
+LDW R2, BP
+LDW R1, (SP)
+ADQ 2, SP
+STW R1, (R2)-4
+LDW R2, BP
+LDW R0, (R2)-4
+LDW SP, BP
+LDW BP, (SP)
+ADQ 2, SP
+LDW WR, (SP)
+JEA (WR)

@@ -1,0 +1,80 @@
+class Mere() is {
+
+	var u : Integer;
+
+	def Mere() is {
+
+	}
+	
+}
+class Fille() extends Mere is {
+
+	var x : Integer;
+
+	def Fille(x : Integer, y : Integer) is {
+		x := 1; //il faut utiliser this.x?
+		z := 2; //z non déclaré
+		u := 3; //pas d'erreur car u appartient à la classe mère
+		v := 4; //erreur car v n'appartient pas à la classe mère
+	}
+	def somme (a : Integer, b : Integer) is {
+		c : Integer;
+
+		is 
+
+		c := a + b;
+		return;
+	}
+	def double (y : Integer) is {
+		y = 2*y;
+		return;
+	}
+}
+
+{
+
+a : Integer;
+b : Integer;
+c : Integer := 2;
+d : Integer := 3;
+e : Integer;
+s : String := "hello";
+t : String;
+fille1 : Fille := new Mere(); //erreur de type
+fille2 : Fille;
+mere : Mere := new Mere();
+
+is
+
+fille2 := new Fille(); // pas d'erreur
+fille1 := new Fille(); //erreur lors de la déclaration de fille1 donc fille1 n'appartient pas à la TDS et est considérée comme non déclarée
+f := c - d; //f non déclaré
+e := c + g; //g non déclaré
+a := d - b; //b non initialisé
+a := c + e; //e toujours pas initialisé car erreur lors de son affectation
+b := "hello"; // erreur d'initialisation car pas les mêmes types
+a := c * s; //erreur de type pour la multiplication
+t := c / d; //erreur de type de retour pour la division
+a := fille2.somme(c,s); //erreur de type pour s
+b := fille2.somme(d); //erreur sur le nombre de paramètres de somme
+s := fille2.double(c); //erreur de type avec la valeur de retour de la méthode
+//a := fille3.double(c); //fille3 non déclarée
+t := s & d; //erreur de type pour la concaténation
+{
+	c : String := "hello";
+	s : Integer;
+
+	is
+
+	s := c; // s est considéré comme un Integer dans ce bloc
+	e :=  2*d; // correct car e et d sont déclaré dans le bloc d'avant
+
+}
+if s = c then c := 4; else {} // erreur de type lors de la comparaison
+if s < 0 then c := 4; else {} // erreur de type lors de la comparaison
+while s < 0 do c := 4;  // erreur de type lors de la comparaison
+while s = c do c := 4;  // erreur de type lors de la comparaison
+while s do c := 4; //impossible d'utiliser un string pour une boucle while
+if c - d >= c / d then c := 5; else {} // pas d'erreur
+
+}

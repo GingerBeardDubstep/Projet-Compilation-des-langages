@@ -1,0 +1,14 @@
+class Arithmetique() is {
+	def Arithmetique() is {}
+
+	def factorielle(a : Integer) : Integer is {
+		if a then result := Arithmetique.factorielle(a-1)*a; else result := 1;
+	}
+}
+{
+	a : Integer;
+	is
+	a := Arithmetique.factorielle(5);
+	String.print("Factorielle de 5 : fact(5) = ");
+	Integer.print(a);
+}

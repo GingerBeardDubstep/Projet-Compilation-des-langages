@@ -1,0 +1,16 @@
+{
+	a : Integer := 10;
+	is
+	while(a)
+	do {
+		b : Integer := 5;
+		is
+		a := a - 1;
+		Integer.println(a);
+		while(b)
+		do{
+			b := b - 1;
+			Integer.println(b*a);
+		}
+	}
+}

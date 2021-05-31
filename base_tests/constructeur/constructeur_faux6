@@ -1,0 +1,10 @@
+class Test (var x : Integer) is {
+
+	Test (x : Integer) IS { // manque def 
+		this.x := x+1;
+	}
+}
+
+{
+
+}

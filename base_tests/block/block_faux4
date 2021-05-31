@@ -1,0 +1,11 @@
+{
+x := x+1;
+} //le programme s'arrête à la fin de la reconnaissance du block
+class Test (var x : Integer) is {
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+
+}
+

@@ -1,0 +1,13 @@
+class Test (var x : Integer) is {
+
+    static var y : Double; // mauvais ordre de static et var
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+
+}
+
+{
+
+}

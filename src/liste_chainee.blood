@@ -1,0 +1,83 @@
+class Listechainee() is {
+	var size : Integer;
+	var next : Listechainee;
+	var val : Integer;
+
+	def Listechainee() is {
+		this.size := 0;
+	}
+
+	def add(a : Integer, b : Listechainee) is {
+		cpt : Integer := this.size;
+		temp : Listechainee := this;
+		is
+		
+		while cpt
+		do {
+			temp := temp.next;
+			
+			cpt := cpt - 1;
+		}
+		temp.next := b;
+		temp.val := a;
+		this.size := this.size + 1;
+	}
+
+	def get(a : Integer) : Integer is {
+		cpt : Integer := a;
+		temp : Listechainee := this;
+		is
+		if cpt >= this.size
+		then {
+			String.println("Error : index out of range");
+			result:= -1;
+		} else {
+			while cpt
+			do {
+				temp := temp.next;
+				cpt := cpt - 1;
+			}
+			result := temp.val;
+		}
+	}
+
+	def contains(a : Integer) : Integer is {
+		cpt : Integer := this.size;
+		temp : Listechainee := this;
+		is
+		result := 0;
+		while cpt
+		do {
+			if a = temp.val
+			then {
+				result := 1;
+			} else {}
+			temp := temp.next;
+			cpt := cpt-1;
+		}
+	}
+
+}
+
+{
+	liste : Listechainee;
+	a : Integer;
+
+	is
+	
+	liste := new Listechainee();
+	liste.add(10, new Listechainee());
+	liste.add(50, new Listechainee());
+	liste.add(65);
+	Integer.println(liste.size);
+	a := liste.get(0);
+	Integer.println(a);
+	a := liste.get(1);
+	Integer.println(a);
+	a := liste.get(2);
+	Integer.println(a);
+	a := liste.get(3);
+	Integer.println(a);
+	Integer.println(liste.contains(50));
+	Integer.println(liste.contains(87));
+}

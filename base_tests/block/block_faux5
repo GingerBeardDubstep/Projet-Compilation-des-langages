@@ -1,0 +1,10 @@
+{
+x := x+1;
+} //le programme s'arrête à la fin de la reconnaissance du block
+Class test (var x = Integer) 
+
+	DEF test var x : Integer) {
+		this.x == x
+	}
+
+{

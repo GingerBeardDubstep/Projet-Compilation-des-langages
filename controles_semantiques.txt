@@ -1,0 +1,11 @@
+Listes des contrôles sémantiques possibles :
+
+-declaration : variable deja declarée (peu importe le type)? / type reconnu?
+-affect : variable declarée? / valeur affectée correspond au type de la variable?
+-initialisation : variable deja declarée? / valeur affectée correspond au type de la variable?
+-appel de méthode : même nombre de paramètres avec mêmes types? objet sur lequel est appelée la méthode a bien cette méthode?
+-classe : constructeur unique pour le même nombre de paramètres avec le même type? / constructeur ayant le même nom que la classe?
+-méthode : méthode avec le même nombre de paramètres de même type déjà appelée? / nom de méthode différent de celui du constructeur (peu importe la casse) / (vérification de la possibilité d'utiliser return)
+-opération : vérification des bons types pour les opérateurs (string pour concaténation, pas de string pour les autres) / vérification d'une division par 0;
+-if : comparaison entre 2 variables n'ayant pas le même type? / verification du type entier si la condition est une variable seule (pas de ==)
+-while : condition entre 2 variables n'ayant pas le même type? / verification du type entier si la condition est une variable seule (pas de ==)

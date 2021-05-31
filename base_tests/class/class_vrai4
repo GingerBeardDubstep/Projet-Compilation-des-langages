@@ -1,0 +1,8 @@
+class Test (var x : Integer) is {
+x := x + 1;
+def Test (var x : Integer) is {
+this.x := x;
+}
+}
+{
+}

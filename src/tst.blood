@@ -1,0 +1,18 @@
+{
+	a : Integer := -45;
+	b : Integer := 89;
+	c : String;
+	d : String;
+	is
+	c := Integer.toString(a);
+	d := Integer.toString(b);
+	String.print(c);
+	String.print(" : ");
+	String.print(d);
+	String.print(" : ");
+	a := a + b;
+	b := 108/4;
+	Integer.print(a);
+	String.print(" : ");
+	Integer.print(b);
+}

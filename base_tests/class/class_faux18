@@ -1,0 +1,12 @@
+class Test (var x : Integer) is {
+
+	def Test (var x : Integer) is {
+		this.x := x;
+	}
+
+    x := x + 1; //affectation impossible à cet endroit
+}
+
+{
+
+}
